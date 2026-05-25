@@ -1,45 +1,87 @@
-# Environment variables
+﻿# Secrets - NEVER commit these
 .env
 .env.*
-
-# Streamlit secrets (API keys — never commit)
 .streamlit/secrets.toml
+*.key
+.envrc
 
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
+*$py.class
+*.so
+
+# Distribution / packaging
 .Python
-*.egg
-*.egg-info/
-dist/
 build/
+develop-eggs/
+dist/
+downloads/
 eggs/
+.eggs/
+lib/
+lib64/
 parts/
-var/
 sdist/
+var/
 wheels/
-pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
 *.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
 
 # Virtual environments
 venv/
 env/
 ENV/
 .venv/
-.env/
+env.bak/
+venv.bak/
 
-# IDE
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Logs
-*.log
-logs/
+# Type checkers
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Ruff
+.ruff_cache/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+logs/
