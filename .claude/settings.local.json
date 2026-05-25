@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(pip install google-api-python-client --no-cache-dir)",
+      "PowerShell(pip cache purge)",
+      "PowerShell(pip install google-api-python-client streamlit --no-cache-dir)",
+      "PowerShell(cd \"c:\\\\Users\\\\Bilal Madni\\\\OneDrive\\\\Desktop\\\\Projects\\\\urdu-sentiment\"; Start-Process powershell -ArgumentList \"-NoExit\", \"-Command\", \"streamlit run youtube_analyzer.py\")"
+    ]
+  }
+}

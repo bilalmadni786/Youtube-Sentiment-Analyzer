@@ -1,0 +1,7 @@
+langchain
+langchain-groq
+langchain-core
+python-dotenv
+streamlit
+google-api-python-client
+plotly
