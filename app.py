@@ -1,20 +1,15 @@
 import os
+import sys
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from comment_import import read_comment_rows, write_comment_rows
 
 load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-if not GROQ_API_KEY:
-    raise ValueError("GROQ_API_KEY .env file mein nahi mili.")
-
-llm = ChatGroq(
-    model="llama-3.3-70b-versatile",
-    api_key=GROQ_API_KEY,
-    temperature=0,
-)
+chain = None
 
 prompt = ChatPromptTemplate.from_messages([
     (
@@ -30,14 +25,37 @@ Koi extra text mat likho.""",
     ("human", "{text}"),
 ])
 
-chain = prompt | llm | StrOutputParser()
+def get_chain():
+    global chain
+    if chain is None:
+        if not GROQ_API_KEY:
+            raise ValueError("GROQ_API_KEY .env file mein nahi mili.")
+        llm = ChatGroq(
+            model="llama-3.3-70b-versatile",
+            api_key=GROQ_API_KEY,
+            temperature=0,
+        )
+        chain = prompt | llm | StrOutputParser()
+    return chain
 
 
 def analyze_sentiment(text: str) -> str:
-    return chain.invoke({"text": text})
+    return get_chain().invoke({"text": text})
+
+
+def analyze_csv_file(input_path: str, output_path: str) -> None:
+    rows = read_comment_rows(input_path)
+    for row in rows:
+        row["sentiment_result"] = analyze_sentiment(row["text"])
+    write_comment_rows(output_path, rows)
 
 
 def main():
+    if len(sys.argv) == 4 and sys.argv[1] == "--csv":
+        analyze_csv_file(sys.argv[2], sys.argv[3])
+        print(f"CSV analysis saved to {sys.argv[3]}")
+        return
+
     print("=" * 50)
     print("   Urdu Sentiment Analyzer (Groq + LangChain)")
     print("=" * 50)
